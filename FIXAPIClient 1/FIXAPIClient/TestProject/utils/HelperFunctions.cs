@@ -69,7 +69,9 @@ namespace TestProject.utils
                     Assert.AreEqual("10012", FIXAPI_ClientAppNetCore.Program.receiveMessage["1"]);
                     Assert.AreEqual(expectedOrderId.ToString(), FIXAPI_ClientAppNetCore.Program.receiveMessage["11"]);
                     Assert.AreEqual(expectedQuantity.ToString(), FIXAPI_ClientAppNetCore.Program.receiveMessage["38"]);
-                    Assert.AreEqual(symbol, FIXAPI_ClientAppNetCore.Program.receiveMessage["55"]); 
+                    Assert.AreEqual(symbol, FIXAPI_ClientAppNetCore.Program.receiveMessage["55"]);
+                    FIXAPI_ClientAppNetCore.Program.MessageResponseStr = null;
+                    FIXAPI_ClientAppNetCore.Program.receiveMessage = null;
                     return;
                 }
 

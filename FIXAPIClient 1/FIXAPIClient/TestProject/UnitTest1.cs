@@ -45,15 +45,19 @@ namespace TestProject
         [Test, Order(2)]
         public async Task ModifyOrder()
         {
-            await CreateOrder();
+            var messageCreate = HelperFunctions.CreateOrderMessage(CreateOrderID, 200, "META");
+
+            await HelperFunctions.SendFixMessage(messageCreate);
+
+            await HelperFunctions.ValidateResponse(CreateOrderID, 200, "META");
 
             Console.WriteLine("ModifyOrder");
 
             await Task.Delay(4000);
 
-            var message = HelperFunctions.ModifyOrderMessage(CreateOrderID + 1, CreateOrderID, 100, "META");
+            var messageModify = HelperFunctions.ModifyOrderMessage(CreateOrderID + 1, CreateOrderID, 100, "META");
 
-            var response = await HelperFunctions.SendFixMessage(message);
+            await HelperFunctions.SendFixMessage(messageModify);
 
             await HelperFunctions.ValidateResponse(CreateOrderID + 1, 100, "META");
         }
@@ -61,15 +65,19 @@ namespace TestProject
         [Test, Order(3)]
         public async Task CancelOrder()
         {
-            await CreateOrder();
+            var messageCreate = HelperFunctions.CreateOrderMessage(CreateOrderID, 200, "META");
+
+            await HelperFunctions.SendFixMessage(messageCreate);
+
+            await HelperFunctions.ValidateResponse(CreateOrderID, 200, "META");
 
             Console.WriteLine("CancelOrder");
 
             await Task.Delay(4000);
 
-            var message = HelperFunctions.CancelOrderMessage(CreateOrderID + 1, CreateOrderID, 100, "META");
+            var messageCancel = HelperFunctions.CancelOrderMessage(CreateOrderID + 1, CreateOrderID, 100, "META");
 
-            var response = await HelperFunctions.SendFixMessage(message);
+            await HelperFunctions.SendFixMessage(messageCancel);
 
             await HelperFunctions.ValidateResponse(CreateOrderID + 1, 100, "META");
         }
