@@ -39,21 +39,20 @@ namespace TestProject.utils
             return $"8=FIX.4.2\u00019=220\u000135=F\u000149=FIXAPISEND1\u000156=FIXAPIAUTOMATION\u000134=66\u0001115=VCGS\u000152={GetFormattedCurrentDateTime()}\u00011=10012\u000111={orderId}\u000160={GetFormattedCurrentDateTime()}\u000154=1\u000121=1\u000138={quantity}\u000147=A\u0001109=10012\u000155={symbol}\u000140=1\u000159=1\u0001100=EDGX\u000141={previousOrderId}\u000110=192\u0001";
         }
 
-        public static async Task<string> SendFixMessage(string message)
+        public static void SendFixMessage(string message)
         {
             try
             {
-                await FIXAPI_ClientAppNetCore.Program.InitOutAPI(message);
+                FIXAPI_ClientAppNetCore.Program.InitOutAPI(message);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 throw;
             }
-            return FIXAPI_ClientAppNetCore.Program.MessageResponseStr;
         }
 
-        public static async Task ValidateResponse(int expectedOrderId, int expectedQuantity, string symbol)
+        public static void ValidateResponse(int expectedOrderId, int expectedQuantity, string symbol)
         {
             for (int attempt = 0; attempt < 5; attempt++)
             {
@@ -76,7 +75,7 @@ namespace TestProject.utils
                 }
 
                 Console.WriteLine($"Attempt {attempt + 1} failed. Retrying in {2000 / 1000} seconds...");
-                await Task.Delay(2000);
+                Task.Delay(2000);
             }
             Console.WriteLine("Max retries reached. No valid response received.");
         }

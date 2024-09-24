@@ -80,7 +80,7 @@ namespace FIXAPI_ClientAppNetCore
             Console.ReadKey();
         }
 
-        public static async Task InitOutAPI(String messageParam)
+        public static void InitOutAPI(String messageParam)
         {
 
             ushort _adminPort = 0;

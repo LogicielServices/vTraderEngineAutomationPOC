@@ -31,55 +31,55 @@ namespace TestProject
 
 
         [Test, Order(1)]
-        public async Task CreateOrder()
+        public void CreateOrder()
         {
             Console.WriteLine("CreateOrder 1");
 
             var message = HelperFunctions.CreateOrderMessage(CreateOrderID, 200, "META");
 
-            var response = await HelperFunctions.SendFixMessage(message);
+            HelperFunctions.SendFixMessage(message);
 
-            await HelperFunctions.ValidateResponse(CreateOrderID, 200, "META");
+            HelperFunctions.ValidateResponse(CreateOrderID, 200, "META");
         }
 
         [Test, Order(2)]
-        public async Task ModifyOrder()
+        public void ModifyOrder()
         {
             var messageCreate = HelperFunctions.CreateOrderMessage(CreateOrderID, 200, "META");
 
-            await HelperFunctions.SendFixMessage(messageCreate);
+            HelperFunctions.SendFixMessage(messageCreate);
 
-            await HelperFunctions.ValidateResponse(CreateOrderID, 200, "META");
+            HelperFunctions.ValidateResponse(CreateOrderID, 200, "META");
 
             Console.WriteLine("ModifyOrder");
 
-            await Task.Delay(4000);
+            Task.Delay(4000);
 
             var messageModify = HelperFunctions.ModifyOrderMessage(CreateOrderID + 1, CreateOrderID, 100, "META");
 
-            await HelperFunctions.SendFixMessage(messageModify);
+            HelperFunctions.SendFixMessage(messageModify);
 
-            await HelperFunctions.ValidateResponse(CreateOrderID + 1, 100, "META");
+            HelperFunctions.ValidateResponse(CreateOrderID + 1, 100, "META");
         }
 
         [Test, Order(3)]
-        public async Task CancelOrder()
+        public void CancelOrder()
         {
             var messageCreate = HelperFunctions.CreateOrderMessage(CreateOrderID, 200, "META");
+                
+             HelperFunctions.SendFixMessage(messageCreate);
 
-            await HelperFunctions.SendFixMessage(messageCreate);
-
-            await HelperFunctions.ValidateResponse(CreateOrderID, 200, "META");
+             HelperFunctions.ValidateResponse(CreateOrderID, 200, "META");
 
             Console.WriteLine("CancelOrder");
 
-            await Task.Delay(4000);
+            Task.Delay(4000);
 
             var messageCancel = HelperFunctions.CancelOrderMessage(CreateOrderID + 1, CreateOrderID, 100, "META");
 
-            await HelperFunctions.SendFixMessage(messageCancel);
+            HelperFunctions.SendFixMessage(messageCancel);
 
-            await HelperFunctions.ValidateResponse(CreateOrderID + 1, 100, "META");
+            HelperFunctions.ValidateResponse(CreateOrderID + 1, 100, "META");
         }
 
         [TearDown]
